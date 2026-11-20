@@ -1,0 +1,3 @@
+package com.canteenpro.service;
+import com.canteenpro.model.Review;import org.springframework.stereotype.Service;import java.util.*;import java.util.concurrent.atomic.AtomicLong;
+@Service public class ReviewService {private final List<Review> reviews=new ArrayList<>();private final AtomicLong seq=new AtomicLong(1);public List<Review> all(){return reviews;}public List<Review> foodReviews(Long foodId){return reviews.stream().filter(r->foodId.equals(r.getFoodId())).toList();}public Review add(Review r){if(r.getRating()<1||r.getRating()>5)throw new RuntimeException("Rating must be between 1 and 5");r.setId(seq.getAndIncrement());reviews.add(r);return r;}public double average(Long foodId){return foodReviews(foodId).stream().mapToInt(Review::getRating).average().orElse(0);}}

@@ -1,0 +1,3 @@
+package com.canteenpro.exception;
+import org.springframework.web.bind.annotation.*;import org.springframework.http.*;import java.util.*;
+@RestControllerAdvice public class ApiExceptionHandler {@ExceptionHandler(RuntimeException.class)public ResponseEntity<Map<String,String>> handle(RuntimeException e){return ResponseEntity.badRequest().body(Map.of("error",e.getMessage()==null?"Request failed":e.getMessage()));}@ExceptionHandler(Exception.class)public ResponseEntity<Map<String,String>> other(Exception e){return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error","Internal server error"));}}
